@@ -28,8 +28,5 @@ public class Card {
 	private String name;
 	
 	@Column(nullable = false)
-	private String pack;
-
-	@Column(nullable = false)
-	private Integer own;
+	private Integer pack;
 }
