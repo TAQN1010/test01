@@ -11,14 +11,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//テーブルcardsの列
+//テーブルpack_tableの例
 @Entity
-@Table(name="cards")
+@Table(name="pack_table")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Card {
-	//カードナンバー、カード名、収録パック名、所持数
+public class Pack {
+	//パック名
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	//主キーの自動採番を指定
@@ -26,10 +26,4 @@ public class Card {
 	
 	@Column(nullable = false)
 	private String name;
-	
-	@Column(nullable = false)
-	private Integer pack_id;
-	
-	@Column(nullable = false)
-	private Integer own;
 }

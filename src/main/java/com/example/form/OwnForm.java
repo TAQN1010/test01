@@ -4,12 +4,12 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-//テーブルcardsの列、自動採番なのでcardNumberは省略
+//テーブルown_tableの例、自動採番なのでidは省略
 @Data
-public class CardForm {
-	//カード名、収録パック名、所持数
+public class OwnForm {
+	//カードID、パックID、所持枚数
 	@NotNull
-	private String name;
+	private Integer card_id;
 	@NotNull
 	private Integer pack_id;
 	@NotNull

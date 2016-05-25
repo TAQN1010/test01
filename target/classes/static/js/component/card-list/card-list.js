@@ -20,11 +20,13 @@
 		vm.inputCardId=0;	//input化するカードID
 		vm.inputPackId=0;	//input化するカードID
 		vm.result=null;	// resultを空に
+		vm.pack=null;
+		vm.own=null;
 		//DBから読み取る    
 		function load(){
 			//読み込みに成功したなら、呼び出し先からの戻り値cardsをdataとして
 			CardService.getList().success(function(data){
-				console.log(data);	//コンソールに全カードリストを表示し
+//				console.log(data);	//コンソールに全カードリストを表示し
 				vm.result=data;		//resultに代入
 			});
 		}

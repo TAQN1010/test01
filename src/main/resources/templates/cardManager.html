@@ -93,12 +93,12 @@
 							
 					<!--	パック名をクリックされたら入力状態に -->
 					<td width="35%" class="ellipsis" ng-hide="ctrl.inputPackId==card.id" 
-						ng-click="ctrl.inputPack(card.id,card)">{{card.pack}}</td>
+						ng-click="ctrl.inputPack(card.id,card)">{{card.pack_id}}</td>
 					
 					<td width="35%" class="ellipsis" ng-show="ctrl.inputPackId==card.id">
 						<!-- input欄外をクリックしたときDB更新 -->
 						<input type="text" name="inputPack"	ng-model="card.pack" class="textarea1"
-						ng-init="card.pack" ng-blur="ctrl.inputPack(0,card)"
+						ng-init="card.pack_id" ng-blur="ctrl.inputPack(0,card)"
 						show-focus="ctrl.inputPackId==card.id" ng-minlength="1" ng-maxlength="50" />
 					</td>
 						
