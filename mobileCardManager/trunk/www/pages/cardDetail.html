@@ -1,0 +1,71 @@
+<ons-page ng-controller="CardDetailController as ctrl">
+  <ons-toolbar>
+    <div class="left">
+      <ons-back-button>戻る</ons-back-button>
+    </div>
+    <div class="center">
+      カード詳細
+    </div>
+    <div class="right">
+      <ons-toolbar-button ng-click="ctrl.update(ctrl.card)">更新</ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+  <section style="padding: 10px">
+    <div>
+      {{ctrl.card.name}}
+    </div>
+    <div class="right">
+      総所持数{{ctrl.card.own}}枚
+    </div>
+
+    <ons-list>
+      <ons-list-header>
+        <div>内訳</div>
+        <div>
+          <ons-row>
+            <ons-col width="70%">収録パック名</ons-col>
+            <ons-col width="20%">枚数</ons-col>
+            <ons-col width="10%"></ons-col>
+          </ons-row>
+        </div>
+      </ons-list-header>
+
+      <ons-list-item ng-repeat="pack in ctrl.packs|filter:{id:ctrl.card.pack_id}:true">
+        <ons-row>
+          <ons-col width="70%">
+            {{pack.name}}
+          </ons-col>
+          <ons-col width="15%">
+            <ons-input type="number" name="inputOwn" ng-model="ctrl.card.own"
+            class="textarea1" modifier="underbar" ng-init="ctrl.card.own"></ons-input>
+          </ons-col>
+          <ons-col width="5%">
+            枚
+          </ons-col>
+          <ons-col width="10%">
+            <ons-icon
+              icon="fa-times"
+              size="20px"
+              fixed-width="false"
+              ng-click="ctrl.reset(ctrl.card)">
+            </ons-icon>
+          </ons-col>
+        </ons-row>
+      </ons-list-item>
+    </ons-list>
+    <button class="btn_del" ng-click="ctrl.showDialog('dialog-del')">すべて削除</button>
+  </section>
+
+  <ons-alert-dialog id="dialog-del">
+    <div class="alert-dialog-title">
+      確認します。
+    </div>
+    <div class="alert-dialog-content">
+      削除しますか？
+    </div>
+    <div class="alert-dialog-footer">
+      <button class="alert-dialog-button" onclick="ctrl.hideDialog('dialog-del')">キャンセル</button>
+      <button class="alert-dialog-button" onclick="ctrl.hideDialog('dialog-del')">削除</button>
+    </div>
+  </ons-alert-dialog>
+</ons-page>

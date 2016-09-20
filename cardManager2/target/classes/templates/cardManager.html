@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
+	<head>
+		<meta charset="UTF-8" />
+		
+		<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+		<script type="text/javascript" src="js/cardManagerApp.js"></script>
+		
+		<title>Card Manager</title>
+	</head>
+	<body ng-controller="CardController as ctrl" ng-init="ctrl.load()">
+		<button class="btn_add btn-default" ng-click="ctrl.add()">登録</button>
+		<div ng-repeat="card in ctrl.result">
+			<button class="btn_del btn-default" ng-click="ctrl.del(card)">削除</button>
+			{{card.id}},
+			{{card.name}},
+			{{card.pack}}
+			<button class="btn- btn-default" ng-click="ctrl.update(-1,card)" ng-disabled="card.own==0">
+				-
+			</button>
+			{{card.own}}枚
+			<button class="btn+ btn-default" ng-click="ctrl.update(1,card)">+</button>
+		</div>
+	</body>
+</html>

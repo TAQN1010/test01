@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+input.textarea1{
+	width:50%;
+}
+input.textarea2{
+	width:100%;
+}

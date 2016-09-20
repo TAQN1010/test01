@@ -1,0 +1,33 @@
+<ons-page ng-controller="MainController as ctrl" ng-init="ctrl.load()">
+    <ons-toolbar>
+        <div class="center">
+          Card Manager
+        </div>
+        <div class="right">
+          <ons-toolbar-button ng-click="ctrl.add(ctrl.packs)">新規登録</ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook">
+      Pull to refresh
+    </ons-pull-hook>
+
+    <section style="padding: 10px">
+      カード名検索:<ons-input type="text" ng-model="searchName" ng-init="searchName=''" modifier="underbar"></ons-input>
+      <ons-list>
+          <ons-list-header>所持カード一覧</ons-list-header>
+          <ons-list-item modifier="chevron" tappable
+                         ng-repeat="card in ctrl.cards|filter:{name:searchName}" ng-click="ctrl.show(card, ctrl.packs)">
+                <ons-row>
+                  <ons-col width="85%" class="ellipsis">
+                    {{card.name}}
+                  </ons-col>
+                  <ons-col width="15%" class="right">
+                    {{card.own}}枚
+                  </ons-col>
+                </ons-row>
+          </ons-list-item>
+      </ons-list>
+
+    </section>
+</ons-page>

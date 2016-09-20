@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+	<script src="js/cardManagerApp.js"></script>
+	<script src="js/service/cardService.js"></script>
+	<script src="js/component/card-list/card-list.js"></script>
+	
+	<title>Card Manager</title>
+	
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+</head>
+<body ng-controller="CardController as ctrl" ng-init="ctrl.load()">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- 	コンテナ作成 -->
+	<div class="table-responsive container">
+		<!-- 	カード情報新規登録ボタン -->
+		<button class="btn_add btn-default" data-toggle="modal"
+			data-target="#inputModal">登録</button>
+		<!--	リスト表示用テーブル作成 -->
+		<table class="table table-hover table-condensed table-headerfixed">
+			<!--	 固定用ヘッダ -->
+			<thead>
+				<tr>
+					<th width="10%">
+						ID
+						<span class="glyphicon glyphicon-sort-by-order" ng-click="ctrl.sort('id')" ng-hide="ctrl.sortId=='id'"></span>
+						<span class="glyphicon glyphicon-sort-by-order-alt" ng-click="ctrl.sort('-id')" ng-hide="ctrl.sortId=='-id'"></span>
+					</th>
+					<th width="40%">
+						カード名
+						<input type="text" ng-model="searchName"/>
+					</th>
+					<th width="10%">
+						所持枚数
+						<span class="glyphicon glyphicon-sort-by-order" ng-click="ctrl.sort('own')" ng-show="ctrl.sortId=='-own'"></span>
+						<span class="glyphicon glyphicon-sort-by-order-alt" ng-click="ctrl.sort('-own')" ng-show="ctrl.sortId!='-own'"></span>
+					</th>
+					<th width="35%">収録パック</th>
+					<th width="5%">削除</th>
+				</tr>
+			</thead>
+			
+			<!--	スクロール可能データ部分 -->
+			<tbody>
+				<!-- 	内容表示。受け取ったソート条件でソートする -->
+				<tr ng-repeat="card in ctrl.result | orderBy:ctrl.sortId | filter:{name:searchName}">
+					<td width="10%" class="ellipsis">{{card.id}}</td>
+					
+					<!--	カード名をクリックされたら入力状態に -->
+					<td width="40%" class="ellipsis" ng-hide="ctrl.inputId==card.id" 
+						ng-click="ctrl.inputName(card.id)">{{card.name}}</td>
+					
+					<td width="40%" class="ellipsis" ng-show="ctrl.inputId==card.id">
+						<!-- 	input内容に変更があった場合、即DB更新 -->
+						<input type="text" name="inputName"	ng-model="card.name" class="textarea2"
+							ng-change="ctrl.update(card)" ng-init="card.name" />
+					</td>
+					
+					<!-- 	input内容に変更があった場合、即DB更新 -->
+					<td width="10%" class="ellipsis"><input type="number"
+						name="inputOwn" ng-model="card.own" min="0" class="textarea1"
+						ng-change="ctrl.update(card)" ng-init="card.own" />枚</td>
+							
+					<!--	パック名をクリックされたら入力状態に -->
+					<td width="35%" class="ellipsis" ng-hide="ctrl.inputId==card.id" 
+						ng-click="ctrl.inputName(card.id)">{{card.pack}}</td>
+					
+					<td width="35%" class="ellipsis" ng-show="ctrl.inputId==card.id">
+						<!-- 	input内容に変更があった場合、即DB更新 -->
+						<input type="text" name="inputPack"	ng-model="card.pack" class="textarea2"
+							ng-change="ctrl.update(card)" ng-init="card.pack" />
+					</td>
+						
+					<td width="5%" class="ellipsis">
+						<span class="glyphicon glyphicon-remove" ng-click="ctrl.del(card)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- カード情報登録用モーダル・ダイアログ -->
+	<div class="modal fade" id="inputModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+					<h4 class="modal-title">新規登録</h4>
+				</div>
+				<form name="inputForm">
+					<div class="modal-body">
+						<div>
+							カード名: <input type="text" name="inputName" ng-model="card.name" />
+						</div>
+						<div>
+							収録パック: <input type="text" name="inputPack" ng-model="card.pack"
+								ng-init="card.pack='収録パック不明'" />
+						</div>
+						<div>
+							所持枚数: <input type="text" name="inputOwn" ng-model="card.own"
+								ng-init="card.own=0" />枚
+						</div>
+						<div ng-show="card.name!=null">
+							<div>登録内容</div>
+							<div>カード名,収録パック,所持枚数</div>
+							<div>{{card}}</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn_cancel btn-default"
+							data-dismiss="modal">キャンセル</button>
+						<button type="button" class="btn_create btn-primary"
+							ng-disabled="card.name==null" ng-click="ctrl.add(card)"
+							data-dismiss="modal">登録</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

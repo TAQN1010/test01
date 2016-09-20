@@ -1,0 +1,52 @@
+<ons-page ng-controller="NewCardController as ctrl">
+  <ons-toolbar>
+    <div class="left">
+      <ons-back-button>戻る</ons-back-button>
+    </div>
+    <div class="center">
+      新規登録
+    </div>
+    <div class="right">
+      <ons-toolbar-button ng-click="ctrl.create(own)">登録</ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+
+  <section style="padding: 10px">
+    <div>
+      カード名:<ons-input type="text" ng-model="own.name"
+              ng-init="own.name=''" modifier="underbar"></ons-input>
+    </div>
+    <ons-list>
+      <ons-list-header>
+        <ons-row>
+          <ons-col width="70%">収録パック名</ons-col>
+          <ons-col width="20%">枚数</ons-col>
+          <ons-col width="10%"></ons-col>
+        </ons-row>
+      </ons-list-header>
+
+      <ons-list-item>
+        <ons-row>
+          <ons-col width="70%">
+            <select ng-options="pack.id as pack.name for pack in ctrl.packs"
+             ng-model="own.pack_id" ng-init="own.pack_id=8" class="ellipsis">
+            </select>
+          </ons-col>
+          <ons-col width="15%">
+            <ons-input type="number" name="newOwn" ng-model="own.own"
+            class="textarea1" modifier="underbar" ng-init="own.own=1"></ons-input>
+          </ons-col>
+          <ons-col width="5%">枚</ons-col>
+          <ons-col width="10%">
+            <ons-icon
+              icon="fa-plus-circle"
+              size="20px"
+              fixed-width="false"
+              style="color:red">
+            </ons-icon>
+          </ons-col>
+        </ons-row>
+      </ons-list-item>
+    </ons-list>
+  </section>
+</ons-page>
